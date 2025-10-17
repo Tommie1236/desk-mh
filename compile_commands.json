@@ -1,0 +1,20 @@
+[
+  {
+    "arguments": [
+      "/usr/lib64/ccache/avr-gcc",
+      "-std=c11",
+      "-mmcu=attiny1616",
+      "-DF_CPU=20000000UL",
+      "-Os",
+      "-Wall",
+      "-Wextra",
+      "-c",
+      "-o",
+      "Code/src/main.o",
+      "Code/src/main.c"
+    ],
+    "directory": "/home/timoo/projects/desk-mh",
+    "file": "/home/timoo/projects/desk-mh/Code/src/main.c",
+    "output": "/home/timoo/projects/desk-mh/Code/src/main.o"
+  }
+]
