@@ -6,10 +6,6 @@
   ==================================================================
 -->
 
-This is my journal of the design and building process of **desk moving-head**.  
-You can view this journal in more detail on **Hack Club Blueprint** [here](https://blueprint.hackclub.com/projects/784).
-
-
 ## 10/20/2025 - complete pcb design and start cad model.  
 
 ### Desk toy Movinghead stagelight
@@ -49,4 +45,28 @@ I don't realy know a lot more details about the pcb design part.
 
 As said before i already have a bunch of pcb's in hand (20, jlc didn't like the tiny board size so i put them in panels of 4 boards each. Photo's in next journal entry.)
 I also started working on the cad model but that isn't very far yet and will also be documented in the next entry as this one is already just above 3K chars. I'm realy not comfortable with cad and still need to learn freecad a lot more. so this is also a good way to do that.  
+
+## 10/25/2025 - Started assembling pcb and first tests.  
+
+Today i started assembling the pcb with the parts i already have. i'm still missing a couple of resistors and capacitors that i forgot to take from the parts bin at my school. 
+
+This was my first real time soldering smd and using solderpaste/hot air. it isn't professional looking but i think it is pretty okay for a first time. ![image](https://blueprint.hackclub.com/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NTMyNSwicHVyIjoiYmxvYl9pZCJ9fQ==--893229344660b73a9bc0ad04887b277c46e16843/image.png)![image](/user-attachments/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NTMyNiwicHVyIjoiYmxvYl9pZCJ9fQ==--bc65c4f17e7a304a7dbc312b01144d4557312638/image.png)
+
+Even though the usb-c pd spec calls for a 5k1 resistor from cc1 and 2 to gnd to request the default 5v 500mA and i was using a 5k6 because that was the closest available it still worked first time. 
+
+After messing around a bit with making a updi programmer from a usb-uart adapter succesfully flashed the attiny with a blink program.
+In theory this was very basic/simple. turn on, wait 500ms, turn off, wait 500ms again. but it was blinking very slow. instead of 500ms it took like 3 seconds for it to change. 
+That is when i discoverd that the attiny 1 series can run at up to 20Mhz instead of just 20Mhz. By default it has a /6 clockdiv enabled so the mcu accually ran at 3.33Mhz instead of 20Mhz. that also explains the 3s delay. (500ms * 6 = 3000ms).
+
+I have been trying to set the clockdivider to 0 for a bit now but every time it softbricks itself and i need to completly erase the mcu to reset the fuses and the clkdiv. I haven't figured out a solution yet.
+
+The soldering of 2 boards, creating a programmer, writing a simple test program and then trying to debug the clk took about 3-5 hours. 
+
+but at least the blink example and usb-c power works. 
+(i have set the delay to 200ms instead of 500ms to get about 500ms real time here)
+
+I can't figure out how to embed a video so here is the demo url
+https://photos.app.goo.gl/bVNjHx33AUzLW4m67
+
+  
 
