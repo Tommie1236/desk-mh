@@ -1,6 +1,13 @@
 #include <avr/io.h>
 
 
+// dmx patch
+// 1: pan
+// 2: tilt
+// 3: red
+// 4: green
+// 5: blue
+// 6-23: red/green/blue 2-7 (for mh wash)
 
 //
 //                x -------------- PA1 addr1
@@ -20,7 +27,11 @@
 //                |  |  x -------- PA7 addr7
 //                |  x ----------- PA6 addr6
 //                x -------------- PA5 addr5
+//
 
+// TODO: defines still needed? using direct PORT/PIN numbers in code
+// and the hardware is already made.
+// Keeping it here for reference right now
 #define ADDR0       22
 #define ADDR1       20
 #define ADDR2       1
@@ -39,3 +50,15 @@
 #define LED         15
 
 #define STATUS_LED  23
+
+
+
+void setup_io();
+
+uint8_t read_addr();
+
+void pan_set(uint8_t *value);
+
+void tilt_set(uint8_t *value);
+
+void led_set_color(uint8_t *color);
