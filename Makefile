@@ -37,7 +37,10 @@ $(TARGET).hex: $(TARGET).elf
 
 # ===== Flash (UPDI) =====
 flash: $(TARGET).hex
-	avrdude -p $(MCU) -c jtag2updi -P /dev/ttyUSB0 -U flash:w:$<
+	pymcuprog write -d attiny1616 -f build/firmware.hex --tool uart -u /dev/ttyUSB0
+
+clear:
+	pymcuprog erase -d attiny1616 --tool uart -u /dev/ttyUSB0
 
 # ===== Clean =====
 clean:

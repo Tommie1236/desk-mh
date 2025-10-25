@@ -8,13 +8,15 @@
       "-Os",
       "-Wall",
       "-Wextra",
+      "-ICode/src",
+      "-ICode/lib",
       "-c",
       "-o",
-      "Code/src/main.o",
+      "build/Code/src/main.o",
       "Code/src/main.c"
     ],
     "directory": "/home/timoo/projects/desk-mh",
     "file": "/home/timoo/projects/desk-mh/Code/src/main.c",
-    "output": "/home/timoo/projects/desk-mh/Code/src/main.o"
+    "output": "/home/timoo/projects/desk-mh/build/Code/src/main.o"
   }
 ]
