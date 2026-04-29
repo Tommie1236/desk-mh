@@ -4,10 +4,15 @@
 // dmx patch
 // 1: pan
 // 2: tilt
-// 3: red
-// 4: green
-// 5: blue
-// 6-23: red/green/blue 2-7 (for mh wash)
+// 3: red1
+// 4: green1
+// 5: blue1
+// 6-23: red/green/blue 2...7 (for mh wash)
+
+#define PATCH_PAN_OFFSET        0
+#define PATCH_TILT_OFFSET       1
+#define PATCH_MASTER_OFFSET     2
+#define PATCH_COLOR_OFFSET      3
 
 //
 //                x -------------- PA1 addr1
@@ -28,6 +33,15 @@
 //                |  x ----------- PA6 addr6
 //                x -------------- PA5 addr5
 //
+
+// uncomment correct model
+#define MH_SPOT
+#define MH_WASH
+
+#if (defined(MH_SPOT) == defined(MH_WASH))
+    // TODO: uncomment error check
+    //#error "Invalidd model configuration: choose either SPOT or WASH"
+#endif
 
 // TODO: defines still needed? using direct PORT/PIN numbers in code
 // and the hardware is already made.
@@ -51,14 +65,22 @@
 
 #define STATUS_LED  23
 
+// g r b ??
+typedef struct {
+    uint8_t red;
+    uint8_t green;
+    uint8_t blue;
+} color_t;
 
+typedef struct {
+    uint8_t position_updated;
+    uint8_t led_updated;
+} status_t;
 
 void setup_io();
 
-uint8_t read_addr();
+uint8_t read_address();
 
-void pan_set(uint8_t *value);
+void set_servos(uint8_t pan, uint8_t tilt);
 
-void tilt_set(uint8_t *value);
-
-void led_set_color(uint8_t *color);
+void set_led_color(color_t *color);
