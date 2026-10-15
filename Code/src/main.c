@@ -1,10 +1,8 @@
 #include "main.h"
 #include "util/delay.h"
-#include "stdbool.h"
 #include "avr/cpufunc.h"
 
 #include "string.h" // memcpy, memcmp
-#include <avr/io.h>
 
 
 static uint8_t address = 0;
@@ -21,6 +19,7 @@ static color_t led_colors[7] = {(color_t){0, 0, 0}};
 
 
 int main() {
+    // set sysclk to 20MHz from 3.3MHz
     _PROTECTED_WRITE(CLKCTRL.MCLKCTRLB, 0x00);
 
     status_t status;
@@ -39,15 +38,16 @@ int main() {
 
     for (;;) {
         address = read_address();
+        // TODO: parse dmx data
+        // dmx_buffer = ...
 
         // only update value when different from dmx
         if (*(dmx_buffer + address + PATCH_PAN_OFFSET) != pan_value) {
-            pan_value = dmx_buffer[address];
-            status.position_updated = 1;
+            TCA0.SINGLE.CMP0 = 312 + (dmx_buffer[address] * 10 / 8);
+            _delay_ms(1); // stagger servo motor startup
         }
         if (*(dmx_buffer + address + PATCH_TILT_OFFSET) != tilt_value) {
-            tilt_value = dmx_buffer[address + 1];
-            status.position_updated = 1;
+            TCA0.SINGLE.CMP1 = 312 + (dmx_buffer[address + 1] * 10 / 8);
         }
         if (*(dmx_buffer + address + PATCH_MASTER_OFFSET) != master_dimmer) {
             master_dimmer = *(dmx_buffer + address + PATCH_MASTER_OFFSET);
@@ -65,6 +65,10 @@ int main() {
             status.led_updated = 1;
         }
 #endif // MH_WASH
+       
+        if (status.led_updated) {
+
+        }
     }
 
     return 0;
@@ -103,12 +107,6 @@ uint8_t read_address() {
     uint8_t addr = PORTA.IN & 0xFE;
     addr |= (PORTC.IN >> 3) & 0x01;
     return addr;
-}
-
-void set_servos(uint8_t pan, uint8_t tilt) {
-    TCA0.SINGLE.CMP0 = 312 + (pan * 10 / 8);
-    _delay_ms(1);   // stagger servo updates to keep power stable
-    TCA0.SINGLE.CMP1 = 312 + (tilt * 10 / 8);
 }
 
 void set_led_color(color_t *color) {

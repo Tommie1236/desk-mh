@@ -84,3 +84,5 @@ uint8_t read_address();
 void set_servos(uint8_t pan, uint8_t tilt);
 
 void set_led_color(color_t *color);
+
+
