@@ -1,7 +1,8 @@
 [
   {
+    "file": "Code/src/main.c",
     "arguments": [
-      "/usr/lib64/ccache/avr-gcc",
+      "/usr/bin/avr-gcc",
       "-std=c11",
       "-mmcu=attiny1616",
       "-DF_CPU=20000000UL",
@@ -11,12 +12,11 @@
       "-ICode/src",
       "-ICode/lib",
       "-c",
+      "Code/src/main.c",
       "-o",
-      "build/Code/src/main.o",
-      "Code/src/main.c"
+      "build/Code/src/main.o"
     ],
     "directory": "/home/timoo/projects/desk-mh",
-    "file": "/home/timoo/projects/desk-mh/Code/src/main.c",
-    "output": "/home/timoo/projects/desk-mh/build/Code/src/main.o"
+    "output": "build/Code/src/main.o"
   }
 ]
